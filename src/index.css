@@ -56,6 +56,29 @@
 @layer base {
   html {
     overflow-x: clip;
+    /* Themed thin scrollbar (Chrome, Edge, Firefox) — follows dark/light tokens */
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-rule-strong) var(--color-page);
+  }
+  /* Tailwind v4 no longer gives buttons a pointer cursor — restore it */
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']),
+  summary,
+  label[for],
+  select {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+  /* Custom cursor active (fine pointers only): hide the native arrow/hand,
+     but keep the text caret in form fields */
+  html.has-custom-cursor,
+  html.has-custom-cursor * {
+    cursor: none !important;
+  }
+  html.has-custom-cursor :is(input, textarea, [contenteditable='true']) {
+    cursor: text !important;
   }
   body {
     background-color: var(--color-page);
@@ -99,6 +122,25 @@
   }
   .gutter {
     padding-inline: clamp(1.25rem, 5vw, 6rem);
+  }
+}
+
+/* Safari and older WebKit, which ignore scrollbar-color */
+@supports not (scrollbar-color: auto) {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-page);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-rule-strong);
+    border: 2px solid var(--color-page);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accent);
   }
 }
 

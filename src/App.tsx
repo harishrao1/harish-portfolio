@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { MotionConfig } from 'motion/react'
 import { Header } from './components/layout/Header'
 import { BackToTop } from './components/layout/BackToTop'
+import { CustomCursor } from './components/fx/CustomCursor'
 import { Hero } from './sections/Hero'
 import { About } from './sections/About'
 import { Experience } from './sections/Experience'
@@ -41,6 +42,7 @@ export default function App() {
       </main>
 
       <BackToTop />
+      <CustomCursor />
     </MotionConfig>
   )
 }
