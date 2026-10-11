@@ -1,0 +1,137 @@
+@import 'tailwindcss';
+@import 'lenis/dist/lenis.css';
+
+/* ---------- Design tokens (dark is the designed default) ---------- */
+@theme {
+  --font-sans: 'Geist Variable', 'Geist', system-ui, -apple-system, sans-serif;
+  --font-display: 'Geist Variable', 'Geist', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Geist Mono Variable', 'Geist Mono', ui-monospace, 'Cascadia Code', monospace;
+
+  --color-page: #0b0b0c;
+  --color-surface: #171613;
+  --color-ink: #ede6da;
+  --color-ink-muted: #a39887;
+  --color-ink-subtle: #6e665a;
+  --color-rule: #24221d;
+  --color-rule-strong: #3a362e;
+  --color-ghost: #201e19;
+  --color-accent: #c9a227;
+  --color-accent-hi: #efd98a;
+  --color-accent-fg: #0b0b0c;
+
+  --animate-blink: blink 1.05s steps(1, end) infinite;
+}
+
+/* Fluid type scale (used via style={{ fontSize: 'var(--text-…)' }}) */
+:root {
+  --text-eyebrow: clamp(0.62rem, 1.1vw, 0.72rem);
+  --text-body: clamp(0.95rem, 1.15vw, 1.05rem);
+  --text-lead: clamp(1.05rem, 1.6vw, 1.3rem);
+  --text-h3: clamp(1.15rem, 2.2vw, 1.6rem);
+  --text-h2: clamp(1.6rem, 3.4vw, 2.5rem);
+  --text-h1: clamp(2.2rem, 6.5vw, 4.5rem);
+  --text-hero: clamp(2.4rem, 8vw, 6rem);
+}
+
+:root[data-theme='light'] {
+  --color-page: #f5f1e8;
+  --color-surface: #eae2d1;
+  --color-ink: #17150f;
+  --color-ink-muted: #6b6353;
+  --color-ink-subtle: #8c8474;
+  --color-rule: #d6ccb6;
+  --color-rule-strong: #bfb49c;
+  --color-ghost: #ded4be;
+  --color-accent: #7a5f10;
+  --color-accent-hi: #b08c1e;
+  --color-accent-fg: #f5f1e8;
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+/* ---------- Base ---------- */
+@layer base {
+  html {
+    overflow-x: clip;
+  }
+  body {
+    background-color: var(--color-page);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    transition:
+      background-color 0.4s,
+      color 0.4s;
+  }
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-accent-fg);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+}
+
+/* ---------- Reusable type + spacing ---------- */
+@layer components {
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-eyebrow);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    font-weight: 500;
+  }
+  /* Large Geist headings: semibold with tight tracking */
+  .display {
+    font-family: var(--font-display);
+    letter-spacing: -0.045em;
+    font-weight: 600;
+    line-height: 1;
+  }
+  .gutter {
+    padding-inline: clamp(1.25rem, 5vw, 6rem);
+  }
+}
+
+/* ---------- Keyframes ---------- */
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes orbit-drift {
+  0%,
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: translate(-50%, -50%) scale(1.55);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
